@@ -20,7 +20,8 @@ function renderHeader(active) {
   ).join('');
   document.write(
     '<div id="lines"><i class="top"></i><i class="left"></i><i class="right"></i><i class="bottom"></i></div>' +
-    '<div id="page" class="flip-in">' +
+    '<div id="veil"></div>' +
+    '<div id="page">' +
     '<header>' +
     '<div class="header-utility">' +
     '<div class="lang-switch"><span class="on">JA</span><span>EN</span><span>KO</span></div>' +
@@ -50,18 +51,24 @@ function renderFooter() {
 /* ===== motion: scroll reveal / heading mask / page flip ===== */
 function initMotion(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var page = document.getElementById('page');
-  // page flip-in (card turning to face) — remove transform after animation so position:fixed works again
-  if(reduce){ page.classList.remove('flip-in'); }
-  else { page.addEventListener('animationend', function(e){ if(e.target===page){ page.classList.remove('flip-in'); } }); }
-  // page flip-out on internal navigation
+  var page = document.getElementById('page'), veil = document.getElementById('veil');
+  var isTop = document.body.classList.contains('top');
+  // page flip-in: black face → turns to show the page. TOP は演出なし。終了後に transform を外す（position:fixed を正常化）
+  if(!reduce && !isTop && sessionStorage.getItem('mk-flip')){
+    page.classList.add('flip-in'); veil.classList.add('fade-out');
+    page.addEventListener('animationend', function(e){ if(e.target===page){ page.classList.remove('flip-in'); veil.classList.remove('fade-out'); } });
+  }
+  sessionStorage.removeItem('mk-flip');
+  // page flip-out on internal navigation: page turns to its black back, then navigate
   document.addEventListener('click', function(e){
     var a = e.target.closest('a'); if(!a) return;
     var href = a.getAttribute('href') || '';
-    if(reduce || a.target==='_blank' || !/\.html(#.*)?$/.test(href) || e.metaKey || e.ctrlKey) return;
+    if(reduce || isTop || a.target==='_blank' || !/\.html(#.*)?$/.test(href) || e.metaKey || e.ctrlKey) return;
+    var toTop = /(^|\/)index\.html/.test(href);
     e.preventDefault();
-    page.classList.add('flip-out');
-    setTimeout(function(){ location.href = href; }, 520);
+    page.classList.add('flip-out'); veil.classList.add('fade-in');
+    if(!toTop) sessionStorage.setItem('mk-flip','1');
+    setTimeout(function(){ location.href = href; }, 600);
   });
   // scroll reveal
   var sel = 'main > section, main > .page-head, main > .grid > figure, main > .year-label, .exh-card, .past-list li, .note-list li, .ref-list li, .merch-item, form.wf .field, .submit-wrap, .about-block p, details.ship';
