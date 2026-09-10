@@ -80,7 +80,7 @@ function initMotion(){
     // 1) ページ内要素を右→左のマスクで消す  2) 黒面へ反転  3) 遷移
     page.classList.add('mask-out');
     setTimeout(function(){ page.classList.add('flip-out'); veil.classList.add('fade-in'); veilFlash(); }, 650);
-    setTimeout(function(){ location.href = href; }, 1250);
+    setTimeout(function(){ location.href = href; }, 1700);
   });
   // scroll reveal
   var sel = 'main > section, main > .page-head, main > .grid > figure, main > .year-label, .exh-card, .past-list li, .note-list li, .ref-list li, .merch-item, form.wf .field, .submit-wrap, .about-block p, details.ship';
