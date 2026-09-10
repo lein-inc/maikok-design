@@ -39,8 +39,6 @@ function renderFooter() {
     '<footer>' +
     '<div class="footer-inner">' +
     '<p class="copyright">© Maiko KOBAYASHI - MK ARTS STUDIO - All Rights Reserved</p>' +
-    '<p class="ai-note">日本語以外のページはAI翻訳を使用しています。 Translations are AI-generated.</p>' +
-    snsIcons() +
     '</div>' +
     '</footer>'
   );
