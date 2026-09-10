@@ -20,7 +20,7 @@ function renderHeader(active) {
   ).join('');
   document.write(
     '<div id="lines"><i class="top"></i><i class="left"></i><i class="right"></i><i class="bottom"></i></div>' +
-    '<div id="veil"></div>' +
+    '<div id="veil"><img class="veil-art" alt=""></div>' +
     '<div id="page">' +
     '<header>' +
     '<div class="header-utility">' +
@@ -52,6 +52,9 @@ function renderFooter() {
 function initMotion(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var page = document.getElementById('page'), veil = document.getElementById('veil');
+  // 黒背景（反転中）に TOP 画像プールからランダム1点を表示
+  var VEIL_POOL=["tones-of-mind-1.jpg","sorrows-of-life.jpg","dear-humanity.jpg","beyond-gaze-into-self.jpg","work-3.jpg","work-7.jpg","IMG_8544.jpg","IMG_8516.jpg","IMG_9681.jpg","IMG_2166.jpg"];
+  veil.querySelector('.veil-art').src = 'img/top/' + VEIL_POOL[Math.floor(Math.random()*VEIL_POOL.length)];
   var isTop = document.body.classList.contains('top');
   // page flip-in: black face → turns to show the page. TOP は演出なし。終了後に transform を外す（position:fixed を正常化）
   if(!reduce && !isTop && sessionStorage.getItem('mk-flip')){
