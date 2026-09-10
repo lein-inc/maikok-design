@@ -46,8 +46,14 @@ img{ max-width:100%; display:block; }
 @keyframes veilIn{ from{ opacity:0; } 60%{ opacity:1; } to{ opacity:1; } }
 @keyframes veilOut{ from{ opacity:1; } 35%{ opacity:1; } to{ opacity:0; } }
 #page{ transform-origin:50% 50%; }
+#page.mask-out{ pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 120px,#000 100%); mask-image:linear-gradient(90deg,transparent 0,#000 120px,#000 100%);
+  -webkit-mask-size:calc(100% + 120px) 100%; mask-size:calc(100% + 120px) 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  animation:maskOut .7s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes maskOut{ from{ -webkit-mask-position:-120px 0; mask-position:-120px 0; } to{ -webkit-mask-position:calc(100% + 120px) 0; mask-position:calc(100% + 120px) 0; } }
 #page.flip-in{ animation:flipIn .8s cubic-bezier(.2,.7,.2,1) both; backface-visibility:hidden; }
 #page.flip-out{ animation:flipOut .6s cubic-bezier(.6,0,.8,.4) forwards; pointer-events:none; backface-visibility:hidden; }
+#page.mask-out.flip-out{ animation:maskOut 0s linear forwards, flipOut .6s cubic-bezier(.6,0,.8,.4) forwards; }
 @keyframes flipIn{ from{ transform:perspective(1600px) rotateY(-90deg); } to{ transform:perspective(1600px) rotateY(0); } }
 @keyframes flipOut{ from{ transform:perspective(1600px) rotateY(0); } to{ transform:perspective(1600px) rotateY(90deg); } }
 .rv{ opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease; }
@@ -106,6 +112,8 @@ p{ padding-left:3px; }
 .anchor-nav a + a::before, .exh-filter span + span::before, .work-filter span + span::before{ content:"/"; color:var(--c-sep); padding:0 8px; cursor:default; }
 .exh-filter .on, .work-filter .on{ color:var(--c-ink); }
 .exh-filter.past-filter{ margin:0 0 22px; }
+.work-filter.year-filter{ margin:-22px 0 30px; }
+.year-label.hide, .grid.hide{ display:none; }
 .past-list li.hide, .exh-card.hide{ display:none; }
 .type-tag{
   display:inline-block; font-size:10px; line-height:16px; letter-spacing:.12em; text-transform:uppercase;

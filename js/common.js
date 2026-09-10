@@ -66,9 +66,11 @@ function initMotion(){
     if(reduce || isTop || a.target==='_blank' || !/\.html(#.*)?$/.test(href) || e.metaKey || e.ctrlKey) return;
     var toTop = /(^|\/)index\.html/.test(href);
     e.preventDefault();
-    page.classList.add('flip-out'); veil.classList.add('fade-in');
     if(!toTop) sessionStorage.setItem('mk-flip','1');
-    setTimeout(function(){ location.href = href; }, 600);
+    // 1) ページ内要素を右→左のマスクで消す  2) 黒面へ反転  3) 遷移
+    page.classList.add('mask-out');
+    setTimeout(function(){ page.classList.add('flip-out'); veil.classList.add('fade-in'); }, 650);
+    setTimeout(function(){ location.href = href; }, 1250);
   });
   // scroll reveal
   var sel = 'main > section, main > .page-head, main > .grid > figure, main > .year-label, .exh-card, .past-list li, .note-list li, .ref-list li, .merch-item, form.wf .field, .submit-wrap, .about-block p, details.ship';
