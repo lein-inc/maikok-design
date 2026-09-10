@@ -54,11 +54,18 @@ function initMotion(){
   var page = document.getElementById('page'), veil = document.getElementById('veil');
   // 黒背景（反転中）に TOP 画像プールからランダム1点を表示
   var VEIL_POOL=["tones-of-mind-1.jpg","sorrows-of-life.jpg","dear-humanity.jpg","beyond-gaze-into-self.jpg","work-3.jpg","work-7.jpg","IMG_8544.jpg","IMG_8516.jpg","IMG_9681.jpg","IMG_2166.jpg"];
-  veil.querySelector('.veil-art').src = 'img/top/' + VEIL_POOL[Math.floor(Math.random()*VEIL_POOL.length)];
+  var veilArt = veil.querySelector('.veil-art');
+  VEIL_POOL.forEach(function(n){ var p=new Image(); p.src='img/top/'+n; });   // 事前読込（瞬時切替のため）
+  // 黒背景中: ランダム5点を 0.2秒間隔でパッパッと切替
+  function veilFlash(){
+    var list = VEIL_POOL.slice().sort(function(){ return Math.random()-.5; }).slice(0,5), i=0;
+    veilArt.src = 'img/top/'+list[0];
+    var t = setInterval(function(){ i++; if(i>=list.length){ clearInterval(t); return; } veilArt.src='img/top/'+list[i]; }, 200);
+  }
   var isTop = document.body.classList.contains('top');
   // page flip-in: black face → turns to show the page. TOP は演出なし。終了後に transform を外す（position:fixed を正常化）
   if(!reduce && !isTop && sessionStorage.getItem('mk-flip')){
-    page.classList.add('flip-in'); veil.classList.add('fade-out');
+    page.classList.add('flip-in'); veil.classList.add('fade-out'); veilFlash();
     page.addEventListener('animationend', function(e){ if(e.target===page){ page.classList.remove('flip-in'); veil.classList.remove('fade-out'); } });
   }
   sessionStorage.removeItem('mk-flip');
@@ -72,7 +79,7 @@ function initMotion(){
     if(!toTop) sessionStorage.setItem('mk-flip','1');
     // 1) ページ内要素を右→左のマスクで消す  2) 黒面へ反転  3) 遷移
     page.classList.add('mask-out');
-    setTimeout(function(){ page.classList.add('flip-out'); veil.classList.add('fade-in'); }, 650);
+    setTimeout(function(){ page.classList.add('flip-out'); veil.classList.add('fade-in'); veilFlash(); }, 650);
     setTimeout(function(){ location.href = href; }, 1250);
   });
   // scroll reveal
