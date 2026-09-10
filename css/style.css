@@ -146,7 +146,8 @@ body.top .footer-inner{ background:transparent; padding-bottom:8px; }
 .year-label{ font-size:var(--fs-h2); line-height:var(--lh-h2); font-weight:700; letter-spacing:var(--ls-h2); color:var(--c-ink); margin:36px 0 18px; }
 .grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:24px 20px; }
 .grid figure{ border:none; }
-.grid img{ width:100%; aspect-ratio:1/1; object-fit:contain; background:var(--c-white); }
+.grid figure.hide{ display:none; }
+.grid img{ width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; background:var(--c-field); }
 .grid figcaption{ display:none; }
 .grid figure{ cursor:pointer; }
 .grid figure:hover img{ opacity:.7; transition:opacity .2s; }
