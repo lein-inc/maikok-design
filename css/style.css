@@ -145,6 +145,13 @@ body.top footer{ position:fixed; left:0; right:0; bottom:var(--frame); z-index:2
 body.top .footer-inner{ background:transparent; padding-bottom:8px; }
 
 /* ===== WORK ===== */
+.work-feature{ margin:10px 0 60px; cursor:pointer; text-align:center; }
+.work-feature img{ margin:0 auto; max-height:72vh; width:auto; max-width:100%; display:block; opacity:0; transition:opacity 1.2s ease; }
+.work-feature img.loaded{ opacity:1; }
+.work-feature figcaption{ font-size:var(--fs-meta); line-height:20px; color:var(--c-text); margin-top:14px; }
+.work-feature figcaption b{ display:block; font-size:var(--fs-h2); line-height:28px; color:var(--c-ink); font-weight:700; }
+.work-feature figcaption span{ display:block; color:var(--c-muted); }
+.work-feature:hover img{ opacity:.85; }
 .year-label{ font-size:var(--fs-h2); line-height:var(--lh-h2); font-weight:700; letter-spacing:var(--ls-h2); color:var(--c-ink); margin:36px 0 18px; }
 .grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:24px 20px; }
 .grid figure{ border:none; }
