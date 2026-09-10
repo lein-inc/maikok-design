@@ -108,6 +108,7 @@ p{ padding-left:3px; }
 .anchor-nav a:hover, .exh-filter span:hover, .work-filter span:hover{ color:var(--c-ink); }
 .anchor-nav a + a::before, .exh-filter span + span::before, .work-filter span + span::before{ content:"/"; color:var(--c-sep); padding:0 8px; cursor:default; }
 .exh-filter .on, .work-filter .on{ color:var(--c-ink); }
+.work-filter span.mark{ text-decoration:underline; text-underline-offset:4px; text-decoration-color:var(--c-ink); }
 .exh-filter.past-filter{ margin:0 0 22px; }
 .work-filter.year-filter{ margin:-22px 0 30px; }
 .year-label.hide, .grid.hide{ display:none; }
