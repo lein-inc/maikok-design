@@ -20,6 +20,7 @@ function renderHeader(active) {
   ).join('');
   document.write(
     '<div id="lines"><i class="top"></i><i class="left"></i><i class="right"></i><i class="bottom"></i></div>' +
+    '<div id="page" class="flip-in">' +
     '<header>' +
     '<div class="header-utility">' +
     '<div class="lang-switch"><span class="on">JA</span><span>EN</span><span>KO</span></div>' +
@@ -40,6 +41,38 @@ function renderFooter() {
     '<div class="footer-inner">' +
     '<p class="copyright">© Maiko KOBAYASHI - MK ARTS STUDIO - All Rights Reserved</p>' +
     '</div>' +
-    '</footer>'
+    '</footer>' +
+    '</div>'
   );
+  initMotion();
+}
+
+/* ===== motion: scroll reveal / heading mask / page flip ===== */
+function initMotion(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var page = document.getElementById('page');
+  // page flip-in (card turning to face) — remove transform after animation so position:fixed works again
+  if(reduce){ page.classList.remove('flip-in'); }
+  else { page.addEventListener('animationend', function(e){ if(e.target===page){ page.classList.remove('flip-in'); } }); }
+  // page flip-out on internal navigation
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if(!a) return;
+    var href = a.getAttribute('href') || '';
+    if(reduce || a.target==='_blank' || !/\.html(#.*)?$/.test(href) || e.metaKey || e.ctrlKey) return;
+    e.preventDefault();
+    page.classList.add('flip-out');
+    setTimeout(function(){ location.href = href; }, 520);
+  });
+  // scroll reveal
+  var sel = 'main > section, main > .page-head, main > .grid > figure, main > .year-label, .exh-card, .past-list li, .note-list li, .ref-list li, .merch-item, form.wf .field, .submit-wrap, .about-block p, details.ship';
+  var heads = '.page-title, h2.sec, h3.subsec, .year-label, .exh-card h3, .merch-item h3, .note-list a';
+  var items = [].slice.call(document.querySelectorAll(sel));
+  items.forEach(function(el){ el.classList.add('rv'); });
+  document.querySelectorAll(heads).forEach(function(el){ el.classList.add('mk'); });
+  if(reduce || !('IntersectionObserver' in window)){ items.forEach(function(el){ el.classList.add('in'); }); document.querySelectorAll('.mk').forEach(function(el){ el.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); en.target.querySelectorAll('.mk').forEach(function(h){ h.classList.add('in'); }); if(en.target.classList.contains('mk')) en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:0.05 });
+  items.forEach(function(el){ io.observe(el); });
+  document.querySelectorAll('.mk').forEach(function(h){ if(!h.closest('.rv')) io.observe(h); });
 }
