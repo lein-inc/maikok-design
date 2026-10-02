@@ -120,7 +120,10 @@ body.top .header-main{ border-bottom:none; }
   pointer-events:none;
 }
 /* ヒーロー英文: 出現時に左→右へマスク（ワイプ）で表示（clip-path: Safari対応） */
-.top-statement .mask-text{ display:inline-block; clip-path:inset(0 100% 0 0); -webkit-clip-path:inset(0 100% 0 0); animation:maskReveal 2.4s cubic-bezier(.4,0,.2,1) .6s forwards; }
+.top-statement{ transition:opacity 1.2s ease; }
+.top-statement.fade-out{ opacity:0; }
+/* 出現は JS（WAAPI）が駆動する。初期状態は隠しておく */
+.top-statement .mask-text{ display:inline-block; clip-path:inset(0 100% 0 0); -webkit-clip-path:inset(0 100% 0 0); }
 @keyframes maskReveal{ to{ clip-path:inset(0 0 0 0); -webkit-clip-path:inset(0 0 0 0); } }
 .topics{ position:fixed; right:calc(var(--pad-x) + var(--frame)); bottom:calc(30px + var(--frame)); z-index:2; }
 .topics-box{ background:var(--c-white); border:1px solid var(--c-ink); padding:14px 16px; width:300px; font-size:var(--fs-meta); line-height:20px; color:var(--c-text); }
