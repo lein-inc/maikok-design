@@ -40,26 +40,12 @@ img{ max-width:100%; display:block; }
 #lines .right{ top:0; right:0; width:var(--frame); height:100%; }
 
 /* ===== motion ===== */
-#veil{ position:fixed; inset:0; background:var(--c-black); z-index:900; opacity:0; pointer-events:none; display:flex; align-items:center; justify-content:center; }
-#veil .veil-art{ width:220px; height:220px; object-fit:cover; display:block; }
-@media (max-width:759px){ #veil .veil-art{ width:160px; height:160px; } }
-#veil.fade-in{ animation:veilIn .6s ease forwards; }
-#veil.fade-out{ animation:veilOut 1.3s ease both; }
-@keyframes veilIn{ from{ opacity:0; } 60%{ opacity:1; } to{ opacity:1; } }
-@keyframes veilOut{ from{ opacity:1; } 70%{ opacity:1; } to{ opacity:0; } }
-#page{ transform-origin:50% 50%; }
-#page.mask-out{ pointer-events:none; animation:maskOut .7s cubic-bezier(.4,0,.2,1) forwards; }
-@keyframes maskOut{ from{ clip-path:inset(0 0 0 0); -webkit-clip-path:inset(0 0 0 0); } to{ clip-path:inset(0 100% 0 0); -webkit-clip-path:inset(0 100% 0 0); } }
-#page.flip-in{ animation:flipIn .8s cubic-bezier(.2,.7,.2,1) .9s both; backface-visibility:hidden; }
-#page.flip-out{ animation:flipOut .6s cubic-bezier(.6,0,.8,.4) forwards; pointer-events:none; backface-visibility:hidden; }
-#page.mask-out.flip-out{ animation:maskOut 0s linear forwards, flipOut .6s cubic-bezier(.6,0,.8,.4) forwards; }
-@keyframes flipIn{ from{ transform:perspective(1600px) rotateY(-90deg); } to{ transform:perspective(1600px) rotateY(0); } }
-@keyframes flipOut{ from{ transform:perspective(1600px) rotateY(0); } to{ transform:perspective(1600px) rotateY(90deg); } }
+/* ページ遷移の反転演出・黒背景（#veil）・作品フラッシュは 2026-10-02 に廃止 */
 .rv{ opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease; }
 .rv.in{ opacity:1; transform:none; }
 .mk{ clip-path:inset(0 100% 0 0); -webkit-clip-path:inset(0 100% 0 0); }
 .mk.in{ animation:maskReveal 1.2s cubic-bezier(.4,0,.2,1) forwards; }
-@media (prefers-reduced-motion: reduce){ #page.flip-in,#page.flip-out,#veil{ animation:none; } .rv{ opacity:1; transform:none; transition:none; } .mk{ clip-path:none; -webkit-clip-path:none; } }
+@media (prefers-reduced-motion: reduce){ .rv{ opacity:1; transform:none; transition:none; } .mk{ clip-path:none; -webkit-clip-path:none; } }
 
 /* ===== header ===== */
 header{ max-width:var(--w-max); margin:0 auto var(--sp-header-bottom); padding:var(--sp-header-top) var(--pad-x) 0; }
